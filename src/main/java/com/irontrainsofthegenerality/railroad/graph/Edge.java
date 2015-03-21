@@ -120,7 +120,7 @@ public class Edge<T extends Weight<?>, VT> implements Comparable<Edge<T,VT>> {
 
 	@Override
 	public int compareTo(Edge<T, VT> o) {
-		return this.weight.compareTo(getWeight());
+		return this.weight.compareTo(o.getWeight());
 	}
 
 	
