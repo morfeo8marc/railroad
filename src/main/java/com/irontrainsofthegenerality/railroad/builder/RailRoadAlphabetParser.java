@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
@@ -17,7 +18,15 @@ import com.irontrainsofthegenerality.railroad.domain.Track;
 
 @Component
 public class RailRoadAlphabetParser implements RailRoadParser {
-	private RuntimeException reNotValidFormat =  new RuntimeException("Not a valid format");
+	private RuntimeException rexcNotValidFormat =  new RuntimeException("Not a valid rail road format");
+	private Pattern townsPattern;
+	
+	
+
+	public RailRoadAlphabetParser() {
+		super();
+		townsPattern = Pattern.compile("[a-zA-Z]{2}\\d+");
+	}
 
 	/**
 	 * Parse Tracks parse the input stream following the rules that follow,
@@ -47,12 +56,12 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 		Map<String, Town> towns = new HashMap<String, Town>();
 		Set<Track> tracks = new HashSet<Track>();
 		
-		Pattern townsPattern = Pattern.compile("[a-zA-Z]{2}\\d+");
+		
 		String townsStr;
 		String token;
 		
 		int distance;
-		Integer townID = 0;// An incremental identifier for each town
+		AtomicInteger townID = new AtomicInteger(0);
 		Track t;
 		
 		try(Scanner s = new Scanner(is).useDelimiter(",")) {
@@ -63,7 +72,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 					distance = Integer.valueOf(token.substring(2));
 					
 				}catch(Exception e){
-					throw reNotValidFormat;
+					throw rexcNotValidFormat;
 				}
 				t = buildTrack(townsStr, distance, townID, towns);
 				tracks.add(t);
@@ -78,7 +87,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 	 * <li>The first character of the string is the starting Town.</li>
 	 * <li>The second letter is the ending Town</li>
 	 * <li>The distance is the distance between the two towns</li>
-	 * <li>If the Town already exist in the {@link #towns} {@link Set} then no new town is created</li>
+	 * <li>If the Town already exist in the {@link #dataStore} {@link Set} then no new town is created</li>
 	 * <li>The town ID is the townID for the first town<li>
 	 * <li>The town ID is the townID+1 for the second town<li>
 	 * <ul>
@@ -91,7 +100,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 	 * @TODO Use locale for the metric units.
 	 * @return The Builded track
 	 */
-	private Track buildTrack(String towns, int distance, Integer townID, Map<String, Town> townSMap) {
+	private Track buildTrack(String towns, int distance, AtomicInteger townID, Map<String, Town> townSMap) {
 		
 		if (towns == null || towns.length() != 2){
 			throw new IllegalArgumentException("Towns must have 2 letters, and got "+ towns);
@@ -113,23 +122,24 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 	
 	/**
 	 * Get Town checks if the Town exists by comparing the names.
-	 * OtherWise it creates the Town, adds it to the {@link #towns} {@link Map}
+	 * OtherWise it creates the Town, adds it to the {@link #dataStore} {@link Map}
 	 * @param townName The Towns Name
 	 * @param townID The Town's id. It is incremented if the town not exists
 	 * @param townSMap The created towns so far
 	 * @return The Town
 	 */
-	private Town getTown(String townName, Integer townID, Map<String, Town> townSMap){
+	private Town getTown(String townName, AtomicInteger townID, Map<String, Town> townSMap){
 		Town t = townSMap.get(townName);
 		
 		if (t == null){
 			TownInformation townInformation = new TownInformation(townName, 0f, 0f);
-			t =  new Town (townInformation, townID);
-			townID++;
+			t =  new Town (townInformation, townID.getAndAdd(1));
+			
 			townSMap.put(townName, t);
 		}
 		
 		return t;
 	}
+
 
 }

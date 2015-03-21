@@ -3,8 +3,11 @@ package com.irontrainsofthegenerality.railroad.graph;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
+
+import com.irontrainsofthegenerality.railroad.domain.Town;
 
 /**
  * A DGraph is a set of {@link Vertex} that are connected Trough {@link Edge}.
@@ -123,6 +126,24 @@ public class DGraph<VT extends Vertex<?>, ET extends Edge<?,VT>> {
 
 	public void setEdges(Set<ET> edges) {
 		this.edges = edges;
+	}
+
+	/**
+	 * Get edges returns the edges connected to vertex
+	 * @param fromVertex The vertex from where we want to go
+	 * @param toVertex The vertex to where we want to go
+	 * @return A {@link Set} of edges of the vertex.
+	 */
+	public Optional<Set<ET>> getEdges(VT fromVertex, VT toVertex) {
+		Set<ET> edges = null;
+		if ( ! vertices.contains(fromVertex)){
+			return Optional.ofNullable(edges);
+		}
+		if ( ! vertices.contains(fromVertex)){
+			return Optional.ofNullable(edges);
+		}
+		edges = graph.get(fromVertex.getId()).get(toVertex.getId());
+		return Optional.of(edges);
 	}
 	
 	

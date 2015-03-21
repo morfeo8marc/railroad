@@ -11,9 +11,15 @@ package com.irontrainsofthegenerality.railroad.graph;
 public interface Weightable<T> {
 	/**
 	 * 
-	 * @return The unit of the weight
+	 * @return The amount of the weight
 	 */
 	T getValue();
+	
+	/**
+	 *Set the amount of the weight.
+	 * @return 
+	 */
+	void setValue(T weight);
 	
 	/**
 	 * Checks if the weightable is negative

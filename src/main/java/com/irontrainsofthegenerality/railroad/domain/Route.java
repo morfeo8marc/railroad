@@ -1,10 +1,8 @@
 package com.irontrainsofthegenerality.railroad.domain;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.management.RuntimeErrorException;
 
 /**
  * A Route represent a {@link List} of {@link Town} where someone wants to go.
@@ -21,7 +19,7 @@ public class Route {
 	 * Constructs and empty List of towns;
 	 */
 	public Route() {
-		this.towns = new ArrayList<Town>();
+		this.towns = new LinkedList<Town>();
 	}
 
 	/**
@@ -52,12 +50,56 @@ public class Route {
 		towns.add(town);
 	}
 	
+	public int getNumberOTowns(){
+		return towns.size();
+	}
+	
 	@Override
 	public String toString(){
 		 return towns.stream()
 				     .map(Town::getName)
 				     .collect(Collectors.joining("-"));
 	}
-	
 
+	/**
+	 * Return the next Town to visit without removing it.
+	 * @return A town no visit.
+	 * @throws RuntimeException if no more towns are to visit
+	 */
+	public Town getNextTownToVisit() {
+		if (getNumberOTowns() < 2){
+			throw new RuntimeException("There are no more Towns to visit");
+		}
+		return towns.get(1);
+	}
+	
+	/**
+	 * Mark next town as visited, creates a new route
+	 * without the first Town
+	 * @return A new Route without the Fist Town
+	 * @throws RuntimeException if no more towns are left.
+	 */
+	public Route markNextTownAsVisited(){
+		if (getNumberOTowns() == 0){
+			throw new RuntimeException("There are no towns to mark as visited");
+		}
+		List<Town> townsTovisit = new LinkedList<Town>(towns);
+		townsTovisit.remove(0);
+		
+		Route route = new Route(townsTovisit);
+		return route;
+	}
+
+	/**
+	 * Start Town return the first town in the  route
+	 * @returnThe start town of the route
+	 * @throws RuntimeException if there are no towns
+	 */
+	public Town getStartTown() {
+		if (getNumberOTowns() == 0){
+			throw new RuntimeException("There are no towns to mark as visited");
+		}
+		return towns.get(0);
+	}
+	
 }

@@ -59,12 +59,12 @@ public class RailRoadBuilderTest {
 	}
 	
 	/**
-	 * Helper class to reuse code to construc t a graph
+	 * Helper class to reuse code to constructs t a graph
 	 * 
 	 * @param graphString The String representing the graph
 	 * @return A Graph create from the the String that represent the graph
 	 */
-	private DGraph<Town, Track> buildRailRoad(String graphString) {
+	public DGraph<Town, Track> buildRailRoad(String graphString) {
 		InputStream ist = new ByteArrayInputStream(graphString.getBytes());
 		
 		DGraph<Town, Track> buildGraph = rrb.buildGraph(ist);

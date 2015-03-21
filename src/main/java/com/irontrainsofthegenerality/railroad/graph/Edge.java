@@ -8,7 +8,7 @@ package com.irontrainsofthegenerality.railroad.graph;
  * @param <T> The Edge's content type
  * @param <VT> The Vertex's content type
  */
-public class Edge<T extends Weight<?>, VT> {
+public class Edge<T extends Weight<?>, VT> implements Comparable<Edge<T,VT>> {
 	
 	/**
 	 * The edge's start
@@ -117,6 +117,13 @@ public class Edge<T extends Weight<?>, VT> {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(Edge<T, VT> o) {
+		return this.weight.compareTo(getWeight());
+	}
+
+	
 	
 	
 }
