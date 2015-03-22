@@ -26,6 +26,14 @@ cd target
 java -jar railroad.jar
 ```
 ## Validating the results
+### Rest interface
+The exercise exposes a very simple rest endpoint at `localhost:8080` that shows the tracks.
+If you want to get a route distance, just go to `localhost:8080/route/{route}` and put the route in substituion of `{route}`. Exmaple:
+```
+localhost:8080/route/A-B-C
+```
+
+### Standard Output
 The application shows te desired output using the system standard's output. 
 ```
                                                                    
