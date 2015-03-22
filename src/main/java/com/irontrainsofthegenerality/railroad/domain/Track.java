@@ -12,8 +12,43 @@ import com.irontrainsofthegenerality.railroad.graph.Edge;
  */
 public class Track extends Edge<Distance, Town> {
 
-	public Track(Town tS, Town tE, Distance distance) {
+	private int ID;
+	
+	public Track(int ID, Town tS, Town tE, Distance distance) {
 		super(tS, tE, distance);
+		this.ID = ID;
 	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Track other = (Track) obj;
+		if (ID != other.ID)
+			return false;
+		return true;
+	}
+	
+	
 
 }

@@ -62,6 +62,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 		
 		int distance;
 		AtomicInteger townID = new AtomicInteger(0);
+		AtomicInteger trackID = new AtomicInteger(0);
 		Track t;
 		
 		try(Scanner s = new Scanner(is).useDelimiter(",")) {
@@ -74,7 +75,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 				}catch(Exception e){
 					throw rexcNotValidFormat;
 				}
-				t = buildTrack(townsStr, distance, townID, towns);
+				t = buildTrack(townsStr, distance, townID, trackID, towns);
 				tracks.add(t);
 			}
 		}
@@ -94,13 +95,14 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 	 * @param towns A 2 chars string representing the towns. 
 	 * 		        Each char is the name of the town
 	 * @param distance The distance between the 2 towns.
+	 * @param trackID The last assigned track id.
 	 * @param townId the last assigned town id. It is incremented by 2 for each call
 	 * @param townSMap The created towns so far
 	 * @throws IllegalArgumentException if the towns length is not 2 or is null
 	 * @TODO Use locale for the metric units.
 	 * @return The Builded track
 	 */
-	private Track buildTrack(String towns, int distance, AtomicInteger townID, Map<String, Town> townSMap) {
+	private Track buildTrack(String towns, int distance, AtomicInteger townID, AtomicInteger trackID, Map<String, Town> townSMap) {
 		
 		if (towns == null || towns.length() != 2){
 			throw new IllegalArgumentException("Towns must have 2 letters, and got "+ towns);
@@ -115,7 +117,7 @@ public class RailRoadAlphabetParser implements RailRoadParser {
 		
 		d = new Distance((float)distance, "km");
 		
-		tack = new Track(startTown, endTown, d);
+		tack = new Track(trackID.getAndIncrement(),startTown, endTown, d);
 		
 		return tack;
 	}
