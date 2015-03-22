@@ -1,17 +1,14 @@
 # Rail Road[Trains Exercise]
---------
 It's a java exercise.
 Spring and the spring-boot project are used in this exercise, to show the knowledge of those technologies.
 For such a small problem it's maybe a little bit overkilled to use Dependency injection and others stuff, but it's used just to show the knowledge of the technologies.
 
 ## Technologies used
----------
 * Java 8.
 * Spring.
 * Spring boot.
 
 ## Usage
---------
 Just clone the repo to your machine and yo can run the exercise in two ways:
 1. If you have maven, just go to the root of the project and type: 
 ```
@@ -22,7 +19,6 @@ mvn spring-boot:run
 java -jar railroad.jar
 ```
 ## Building a release
---------
 In order to build an executable binary of the exercise just go to the project's root directory and type:
 ```
 mvn package
@@ -69,7 +65,6 @@ The application shows te desired output using the system standard's output.
 ```
 
 ## The Problem to model
---------
 The local commuter railroad services a number of towns in Kiwiland.
 Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia. In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
