@@ -1,5 +1,13 @@
 h1 Rail Road[Trains Exercise]
 --------
+It's a java exercise.
+Spring and the spring-boot project are used in this exercise, to show the knowledge of those technologies.
+For such a small problem it's maybe a little bit overkilled to use Dependency injection and others stuff, but it's used just to show the knowledge of the technologies.
+
+h2 The Problem to model
+
+h2 The Problem to model
+--------
 The local commuter railroad services a number of towns in Kiwiland.
 Because of monetary concerns, all of the tracks are 'one-way.' That is, a route from Kaitaia to Invercargill does not imply the existence of a route from Invercargill to Kaitaia. In fact, even if both of these routes do happen to exist, they are distinct and are not necessarily the same distance!
 
