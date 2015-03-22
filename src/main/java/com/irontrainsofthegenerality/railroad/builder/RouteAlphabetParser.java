@@ -60,10 +60,15 @@ public class RouteAlphabetParser implements RouteParser {
 					String townName = s.next(townsPattern);
 					
 					town = townRepository.findTownByName(townName);
-					
+					if (town == null){
+						throw new RuntimeException("Town " + townName + " does not exist");
+					}
 					route.addTown(town);
 					
-				}catch(Exception e){
+				}catch(RuntimeException re){
+					throw re;
+				}
+				catch(Exception e){
 					throw rexcNotValidFormat;
 				}
 			}

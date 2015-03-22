@@ -87,5 +87,12 @@ public class Distance extends Weight<Float> {
 	public void setValue(Float weight) {
 		this.weight = weight;
 	}
+
+	@Override
+	public String toString() {
+		return weight + " " + unit;
+	}
+	
+	
 	
 }

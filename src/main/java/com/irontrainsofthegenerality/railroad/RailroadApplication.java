@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import com.irontrainsofthegenerality.railroad.builder.RailRoadBuilder;
 import com.irontrainsofthegenerality.railroad.builder.RouteParser;
 import com.irontrainsofthegenerality.railroad.domain.Journey;
+import com.irontrainsofthegenerality.railroad.domain.RailRoad;
 import com.irontrainsofthegenerality.railroad.domain.Route;
 import com.irontrainsofthegenerality.railroad.domain.Town;
 import com.irontrainsofthegenerality.railroad.domain.Track;
@@ -29,43 +30,29 @@ import com.irontrainsofthegenerality.railroad.repository.TownRepository;
 public class RailroadApplication {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	private DGraph<Town, Track> railRoadgraph ;
 	@Autowired
-	private RailRoadBuilder rrb;
+	private RailRoad railRoad;
 	@Autowired
-	@Qualifier("DirectShortestRoutePlanner")
-	private RoutePlanner routePlanner;
-	@Autowired
-	private RouteParser rp;
-	@Autowired
-	private TownRepository townRepository;
+	private RouteParser routeParser;
 	
     public static void main(String[] args) {
         SpringApplication.run(RailroadApplication.class, args);
     }
+    
     @Bean
     CommandLineRunner init(){
     	return args -> {
     		
-    		String graphString = "AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7";
     		
-    		InputStream ist = new ByteArrayInputStream(graphString.getBytes());
-    		
-    		railRoadgraph = rrb.buildGraph(ist);
-    		
-    		Set<Town> towns = railRoadgraph.getVertices();
-    		towns.forEach(t->{
-    			townRepository.save(t);
-    		});
     		List<String> routes = Arrays.asList("A-B-C", "A-D","A-D-C", "A-E-B-C-D", "A-E-D");
     		int i = 1;
     		for (String r : routes) {
 			
     			String routeStr = r;
     			
-    			Route route = rp.parse(new ByteArrayInputStream(routeStr.getBytes()));
+    			Route route = routeParser.parse(new ByteArrayInputStream(routeStr.getBytes()));
     			
-    			Journey journey = routePlanner.planRoute(route, railRoadgraph);
+    			Journey journey = railRoad.planJourney(route);
     			
     			logger.info("OUTPUT #{}: {}", i, journey.getResult());
     			
@@ -73,4 +60,5 @@ public class RailroadApplication {
     		}
     	};
     }
+    
 }
