@@ -1,30 +1,21 @@
 package com.irontrainsofthegenerality.railroad;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.irontrainsofthegenerality.railroad.builder.RailRoadBuilder;
 import com.irontrainsofthegenerality.railroad.builder.RouteParser;
 import com.irontrainsofthegenerality.railroad.domain.Journey;
 import com.irontrainsofthegenerality.railroad.domain.RailRoad;
 import com.irontrainsofthegenerality.railroad.domain.Route;
-import com.irontrainsofthegenerality.railroad.domain.Town;
-import com.irontrainsofthegenerality.railroad.domain.Track;
-import com.irontrainsofthegenerality.railroad.graph.DGraph;
-import com.irontrainsofthegenerality.railroad.planner.RoutePlanner;
-import com.irontrainsofthegenerality.railroad.repository.TownRepository;
 
 @SpringBootApplication
 public class RailroadApplication {

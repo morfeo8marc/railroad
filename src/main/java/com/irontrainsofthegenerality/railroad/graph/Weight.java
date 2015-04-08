@@ -57,6 +57,22 @@ public abstract class Weight<T extends Comparable<? super T>> implements Compara
 			return false;
 		return true;
 	}
+
+	@Override
+	public T getValue() {
+		return weight;
+	}
+
+	@Override
+	public void setValue(T weight) {
+		this.weight = weight;
+	}
+
+	@Override
+	public int compareTo(Weight<T> o) {
+		
+		return o.compareTo(o);
+	}
 	
 	
 }
